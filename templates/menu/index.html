@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pideci Said | Menü</title>
+    <!-- Modern Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Pideci Said</h1>
+        <p>Geleneksel Lezzet, Taptaze Menü</p>
+    </header>
+
+    {% if categories %}
+    <!-- Kategori Navigasyonu -->
+    <nav class="category-nav">
+        <div class="category-list">
+            {% for category in categories %}
+            <button class="category-btn {% if forloop.first %}active{% endif %}" data-target="cat-{{ category.id }}">
+                {{ category.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <!-- Menü İçeriği -->
+    <main class="menu-container">
+        {% for category in categories %}
+        <section id="cat-{{ category.id }}" class="category-section">
+            <h2 class="category-title">{{ category.name }}</h2>
+            <div class="menu-items">
+                {% for item in category.items.all %}
+                {% if item.is_active %}
+                <article class="menu-item">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}" class="item-img" loading="lazy">
+                    {% endif %}
+                    <div class="item-details">
+                        <div class="item-header">
+                            <h3 class="item-title">{{ item.name }}</h3>
+                            <span class="item-price">{{ item.price|floatformat:2 }} ₺</span>
+                        </div>
+                        {% if item.description %}
+                        <p class="item-desc">{{ item.description }}</p>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endif %}
+                {% empty %}
+                <p class="item-desc" style="color:#999; font-style:italic;">Bu kategoride henüz ürün bulunmuyor.</p>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+    </main>
+    {% else %}
+    <div class="empty-menu">
+        <h2>Menümüz yakında güncellenecektir.</h2>
+    </div>
+    {% endif %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
