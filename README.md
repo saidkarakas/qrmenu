@@ -74,18 +74,23 @@ python manage.py runserver
 Menü: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 Admin Paneli: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
+### 🔑 Admin Paneli Giriş Bilgileri
+* **Kullanıcı Adı (Username):** `admin`
+* **Şifre (Password):** `qr123456`
+
+
 ---
 
 ## 🌍 Deploy (PythonAnywhere)
 
 1. [PythonAnywhere.com](https://www.pythonanywhere.com) üzerinden ücretsiz hesap açın.
-2. **Web** sekmesinden "Add a new web app" → **Manual Configuration** → Python 3 seçin.
+2. **Web** sekmesinden "Add a new web app" → **Manual Configuration** → Python 3.12 seçin.
 3. **Bash** konsolunda:
 
 ```bash
 git clone https://github.com/saidkarakas/qrmenu.git
 cd qrmenu
-mkvirtualenv --python=/usr/bin/python3.10 qrmenu-venv
+mkvirtualenv --python=/usr/bin/python3.12 qrmenu-venv
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py collectstatic --noinput
